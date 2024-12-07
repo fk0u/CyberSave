@@ -7,6 +7,13 @@
         "color": "text-green-400"
     },
     {
+        "name": "Soundcloud",
+        "description": "Download Soundcloud music with effortless",
+        "icon": "fab fa-soundcloud",
+        "link": "/platforms/soundcloud",
+        "color": "text-orange-500"
+    },
+    {
         "name": "TikTok",
         "description": "Download TikTok videos without watermarks.",
         "icon": "fab fa-tiktok",
