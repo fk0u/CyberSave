@@ -26,6 +26,20 @@
       "icon": "fab fa-instagram",
       "link": "/platforms/instagram",
       "color": "text-pink-500"
+    },
+    {
+      "name": "Pinterest",
+      "description": "Download Pinterest photos and art easily.",
+      "icon": "fab fa-pinterest",
+      "link": "/platforms/pinterest",
+      "color": "text-pink-500"
+    },
+    {
+      "name": "YouTube",
+      "description": "Download Youtube music and videos easily.",
+      "icon": "fab fa-youtube",
+      "link": "/platforms/youtube",
+      "color": "text-pink-500"
     }
     
   ]
