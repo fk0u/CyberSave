@@ -51,22 +51,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 let downloadLinksHTML = '';
 
                 if (qualities.includes("360p")) {
-                    downloadLinksHTML += `<a href="${videoData.media.video['360p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-4 mr-4">
+                    downloadLinksHTML += `<a href="${videoData.media.video['360p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-2 mr-2">
                                             Download 360p (${videoData.media.video['360p'].size})
                                           </a>`;
                 }
                 if (qualities.includes("720p")) {
-                    downloadLinksHTML += `<a href="${videoData.media.video['720p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-4 mr-4">
+                    downloadLinksHTML += `<a href="${videoData.media.video['720p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-2 mr-2">
                                             Download 720p (${videoData.media.video['720p'].size})
                                           </a>`;
                 }
                 if (qualities.includes("1080p")) {
-                    downloadLinksHTML += `<a href="${videoData.media.video['1080p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-4 mr-4">
+                    downloadLinksHTML += `<a href="${videoData.media.video['1080p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-2 mr-2">
                                             Download 1080p (${videoData.media.video['1080p'].size})
                                           </a>`;
                 }
+                if (qualities.includes("1440p")) {
+                    downloadLinksHTML += `<a href="${videoData.media.video['1440p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-2 mr-2">
+                                            Download 1440p (${videoData.media.video['1440p'].size})
+                                          </a>`;
+                }
                 if (qualities.includes("4k")) {
-                    downloadLinksHTML += `<a href="${videoData.media.video['4k'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-4 mr-4">
+                    downloadLinksHTML += `<a href="${videoData.media.video['4k'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2 ml-2 mr-2">
                                             Download 4K (${videoData.media.video['4k'].size})
                                           </a>`;
                 }
