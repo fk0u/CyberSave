@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const videoViews = document.getElementById("videoViews");
         const videoLikes = document.getElementById("videoLikes");
         const videoDislikes = document.getElementById("videoDislikes");
-        const downloadLink = document.getElementById("downloadLink");
+        const downloadLinkContainer = document.getElementById("downloadLinkContainer");
 
         // Show loading status
         loadingStatus.classList.remove("hidden");
@@ -38,13 +38,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
                 videoTitle.textContent = videoData.title;
                 videoDescription.textContent = videoData.description.slice(0, 150) + '...';  // Limit to 150 chars
-                videoDuration.querySelector('span').textContent = videoData.duration_formatted;
+                videoDuration.querySelector('span').textContent = videoData.durationFormatted;
                 videoViews.querySelector('span').textContent = videoData.views;
-                videoLikes.querySelector('span').textContent = videoData.ratings.likes;
-                videoDislikes.querySelector('span').textContent = videoData.ratings.dislikes;
+                videoLikes.querySelector('span').textContent = videoData.likes;
+                videoDislikes.querySelector('span').textContent = videoData.dislikes;
 
-                // Set download link
-                downloadLink.href = videoData.url;
+                // Populate download links based on available resolutions
+                downloadLinkContainer.innerHTML = ''; // Clear previous download links
+
+                // Checking available video qualities and creating download links
+                const qualities = videoData.media.video.quality;
+                let downloadLinksHTML = '';
+
+                if (qualities.includes("360p")) {
+                    downloadLinksHTML += `<a href="${videoData.media.video['360p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2">
+                                            Download 360p (${videoData.media.video['360p'].size})
+                                          </a>`;
+                }
+                if (qualities.includes("720p")) {
+                    downloadLinksHTML += `<a href="${videoData.media.video['720p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2">
+                                            Download 720p (${videoData.media.video['720p'].size})
+                                          </a>`;
+                }
+                if (qualities.includes("1080p")) {
+                    downloadLinksHTML += `<a href="${videoData.media.video['1080p'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2">
+                                            Download 1080p (${videoData.media.video['1080p'].size})
+                                          </a>`;
+                }
+                if (qualities.includes("4k")) {
+                    downloadLinksHTML += `<a href="${videoData.media.video['4k'].url}" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mt-2">
+                                            Download 4K (${videoData.media.video['4k'].size})
+                                          </a>`;
+                }
+
+                // Append download links to the container
+                downloadLinkContainer.innerHTML = downloadLinksHTML;
 
             } else {
                 alert('Error fetching video data. Please try again.');
