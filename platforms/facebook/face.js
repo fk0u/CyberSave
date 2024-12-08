@@ -1,4 +1,3 @@
-// Handle form submission
 document.getElementById('downloadForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     const url = document.getElementById('facebookUrl').value;
