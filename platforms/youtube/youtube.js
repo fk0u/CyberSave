@@ -6,9 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = document.getElementById("userQuery").value.trim();
         const loadingStatus = document.getElementById("loadingStatus");
         const resultsSection = document.getElementById("results");
+
+        // Get elements for video data
         const thumbnail = document.getElementById("thumbnail");
         const videoTitle = document.getElementById("videoTitle");
         const videoDescription = document.getElementById("videoDescription");
+        const videoDuration = document.getElementById("videoDuration");
+        const videoViews = document.getElementById("videoViews");
+        const videoLikes = document.getElementById("videoLikes");
+        const videoDislikes = document.getElementById("videoDislikes");
         const downloadLink = document.getElementById("downloadLink");
 
         // Show loading status
@@ -29,8 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Populate the results section dynamically
                 thumbnail.src = videoData.thumbnail.url;
                 videoTitle.textContent = videoData.title;
-                videoDescription.textContent = videoData.description.slice(0, 150) + '...';
-                downloadLink.href = videoData.url; // Set download link
+                videoDescription.textContent = videoData.description.slice(0, 150) + '...';  // Limit to 150 chars
+                videoDuration.querySelector('span').textContent = videoData.duration_formatted;
+                videoViews.querySelector('span').textContent = videoData.views;
+                videoLikes.querySelector('span').textContent = videoData.ratings.likes;
+                videoDislikes.querySelector('span').textContent = videoData.ratings.dislikes;
+
+                // Set download link
+                downloadLink.href = videoData.url;
 
             } else {
                 alert('Error fetching video data. Please try again.');
