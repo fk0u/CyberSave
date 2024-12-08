@@ -51,9 +51,16 @@
     {
       "name": "Threads",
       "description": "Download Threads post and videos easily.",
-      "icon": "fa-brands fa-threads",
+      "icon": "fab fa-threads",
       "link": "/platforms/threads",
       "color": "text-gray-500"
+    },
+    {
+      "name": "X aka Twitter",
+      "description": "Download X Post and videos easily.",
+      "icon": "fab fa-twitter",
+      "link": "/platforms/X",
+      "color": "text-blue-500"
     }
     
   ]
