@@ -22,8 +22,81 @@
         .text-pinterest-red {
             color: #E60023; /* Pinterest red color */
         }
-        .hover-scale:hover {
+        /* Custom tweet-like card for Pinterest */
+        .pinterest-card {
+            background-color: #2f2f2f;
+            border-radius: 10px;
+            border: 1px solid #444;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .pinterest-card:hover {
             transform: scale(1.05);
+        }
+        
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tweet-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .tweet-header h3 {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .tweet-header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .tweet-content {
+            margin-top: 15px;
+            color: #ddd;
+        }
+
+        .tweet-content img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .tweet-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #888;
+        }
+
+        .tweet-footer span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tweet-footer i {
+            color: #e60023;
+        }
+
+        .tweet-footer a {
+            color: #fff;
+            background-color: #e60023;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .tweet-footer a:hover {
+            background-color: #b7001d;
         }
     </style>
 </head>
@@ -66,26 +139,33 @@
                     Download
                 </button>
             </form>
-            
-            <!-- Loading Bar -->
-            <div id="loadingBar" class="hidden mt-4 w-full bg-gray-700 text-white rounded-lg p-2 text-center">
-                <span id="loadingMessage">Loading...</span>
-            </div>
         </div>
     </section>
 
     <!-- Results Section -->
     <section id="results" class="py-12 hidden">
-        <div class="container mx-auto px-6 lg:px-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Dynamic content will be loaded here -->
-                <div class="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg text-center hover-scale transition-all">
-                    <img src="https://via.placeholder.com/300" alt="Pinterest Image" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <p class="text-gray-200">Image Description</p>
-                    <a href="#" class="mt-4 text-pinterest-red hover:underline">Download</a>
+        <div class="container mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Example Pinterest-like card for image -->
+            <div class="pinterest-card">
+                <div class="tweet-header">
+                    <img src="https://via.placeholder.com/50" alt="Avatar">
+                    <div>
+                        <h3>John Doe</h3>
+                        <p>@john_doe</p>
+                    </div>
                 </div>
-                <!-- Add more content dynamically here -->
+                <div class="tweet-content">
+                    <img src="https://via.placeholder.com/600x400" alt="Pinterest image">
+                    <p>This is an image from Pinterest. Just downloaded it easily!</p>
+                </div>
+                <div class="tweet-footer">
+                    <span><i class="fas fa-heart"></i> 11,163</span>
+                    <span><i class="fas fa-comment"></i> 280</span>
+                    <span><i class="fas fa-retweet"></i> 2,506</span>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
             </div>
+            <!-- Repeat more cards dynamically as needed -->
         </div>
     </section>
 
@@ -115,27 +195,6 @@
                         Your privacy and security are our top priority.
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
-        <div class="container mx-auto px-6 lg:px-20">
-            <h2 class="text-center text-3xl lg:text-4xl font-bold text-gray-100">About Pinterest Downloader</h2>
-            <p class="mt-6 max-w-4xl mx-auto text-center text-gray-300 lg:text-lg">
-                Pinterest Downloader allows you to easily download images and videos from Pinterest without watermarks and in high quality.
-            </p>
-            <div class="mt-8 flex justify-center space-x-6">
-                <a href="https://www.instagram.com/pinterest" target="_blank" class="text-gray-300 hover:text-white text-2xl">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/company/pinterest" target="_blank" class="text-gray-300 hover:text-white text-2xl">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/pinterest" target="_blank" class="text-gray-300 hover:text-white text-2xl">
-                    <i class="fab fa-github"></i>
-                </a>
             </div>
         </div>
     </section>
