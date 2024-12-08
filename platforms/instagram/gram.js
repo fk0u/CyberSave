@@ -1,53 +1,61 @@
-// Import nayan-media-downloader package in your Node.js environment
-const { instagram } = require("nayan-media-downloader");
-
 document.getElementById("downloadForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const instagramUrl = document.getElementById("instagramUrl").value;
-    const loadingBar = document.getElementById("loadingBar");
-    const loadingMessage = document.getElementById("loadingMessage");
+    const videoUrl = document.getElementById("instagramUrl").value;
     const resultSection = document.getElementById("result");
     const authorAvatar = document.getElementById("authorAvatar");
     const authorName = document.getElementById("authorName");
+    const authorUsername = document.getElementById("authorUsername");
     const videoCaption = document.getElementById("videoCaption");
-    const mediaPreview = document.getElementById("mediaPreview");
-    const downloadMedia = document.getElementById("downloadMedia");
+    const mediaContainer = document.getElementById("mediaContainer");
+    const loadingBar = document.getElementById("loadingBar");
 
-    // Show loading bar
+    // Clear previous result
+    mediaContainer.innerHTML = '';
+    resultSection.style.display = 'none';
+
+    // Show loading
     loadingBar.classList.remove("hidden");
-    loadingMessage.textContent = "Fetching data...";
+
+    const apiUrl = `https://api.zpi.my.id/v1/download/instagram?url=${encodeURIComponent(videoUrl)}`;
 
     try {
-        // Fetch Instagram data using nayan-media-downloader
-        const data = await instagram(instagramUrl);
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-        // Update UI with fetched data
-        authorAvatar.src = data.author.profile_pic || "https://via.placeholder.com/100";
-        authorName.textContent = data.author.name || "Unknown Author";
-        videoCaption.textContent = data.caption || "No caption available";
-        mediaPreview.src = data.media_url || "";
-        downloadMedia.href = data.media_url || "#";
+        if (data.status === 200) {
+            // Display author info
+            authorAvatar.src = data.data.author.is_verified ? data.data.author.avatar : "https://via.placeholder.com/50";
+            authorName.textContent = data.data.author.fullname || "Unknown Author";
+            authorUsername.textContent = `@${data.data.author.username || "unknown"}`;
+            
+            // Display video caption
+            videoCaption.textContent = data.data.message || "No caption available";
 
-        // Show result section
-        resultSection.classList.remove("hidden");
-        loadingMessage.textContent = "Displaying data...";
+            // Display media (images)
+            data.data.media.forEach(item => {
+                if (item.type === 'image') {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = item.url;
+                    mediaContainer.appendChild(imgElement);
+
+                    // Add download link for each image
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = item.url;
+                    downloadLink.download = item.url.split('/').pop();
+                    downloadLink.textContent = 'Unduh Gambar';
+                    mediaContainer.appendChild(downloadLink);
+                }
+            });
+
+            resultSection.style.display = 'block'; // Show the result section
+        } else {
+            alert("Gagal mengambil data media, periksa URL.");
+        }
     } catch (error) {
-        console.error("Error fetching data:", error);
-        alert("Failed to retrieve media. Please check the URL and try again.");
+        console.error("Error:", error);
+        alert("Terjadi kesalahan. Coba lagi.");
     } finally {
-        // Hide loading bar
-        loadingBar.classList.add("hidden");
-    }
-});
-
-// Clipboard Paste Feature
-document.getElementById("pasteButton").addEventListener("click", async () => {
-    const instagramUrlInput = document.getElementById("instagramUrl");
-    try {
-        const text = await navigator.clipboard.readText();
-        instagramUrlInput.value = text;
-    } catch (err) {
-        alert("Failed to read clipboard contents: " + err);
+        loadingBar.classList.add("hidden"); // Hide loading after API call
     }
 });
