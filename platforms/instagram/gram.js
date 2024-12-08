@@ -10,12 +10,8 @@ document.getElementById("downloadForm").addEventListener("submit", async (e) => 
     const likes = document.getElementById("likes");
     const comments = document.getElementById("comments");
     const shares = document.getElementById("shares");
-    const videoPreview = document.getElementById("videoPreview");
-    const downloadVideo = document.getElementById("downloadVideo");
-    const musicTitle = document.getElementById("musicTitle");
-    const musicAuthor = document.getElementById("musicAuthor");
-    const musicDuration = document.getElementById("musicDuration");
-    const downloadMusic = document.getElementById("downloadMusic");
+    const mediaPreview = document.getElementById("mediaPreview");
+    const downloadMedia = document.getElementById("downloadMedia");
     const loadingBar = document.getElementById("loadingBar");
 
     // Clear previous result
@@ -23,9 +19,8 @@ document.getElementById("downloadForm").addEventListener("submit", async (e) => 
     loadingBar.classList.remove("hidden");
 
     // Reset previous content
-    videoPreview.src = '';
-    downloadVideo.href = '';
-    downloadMusic.href = '';
+    mediaPreview.innerHTML = ''; // Clear previous media
+    downloadMedia.href = '';
 
     // API call URL
     const apiUrl = `https://api.zpi.my.id/v1/download/instagram?url=${encodeURIComponent(videoUrl)}`;
@@ -41,28 +36,43 @@ document.getElementById("downloadForm").addEventListener("submit", async (e) => 
             authorUsername.textContent = `@${data.data.author.username || "unknown"}`;
 
             // Display caption
-            videoCaption.textContent = "No caption available"; // Update if caption is available
-            if (data.data.message) {
-                videoCaption.textContent = data.data.message;
-            }
+            videoCaption.textContent = data.data.message || "No caption available";
 
             // Display engagement stats (likes, comments, shares)
             likes.textContent = data.data.likes || "0";
             comments.textContent = "0"; // Default to 0 if comments data is missing
             shares.textContent = "0"; // Default to 0 if shares data is missing
 
-            // Display images (since the media is of type "image")
-            const imageGallery = document.getElementById("imageGallery");
-            imageGallery.innerHTML = ""; // Clear any previous images
-            data.data.media.forEach((image) => {
-                if (image.type === "image") {
-                    const imgElement = document.createElement("img");
-                    imgElement.src = image.url;
-                    imgElement.alt = "Instagram Image";
-                    imgElement.classList.add("w-full", "h-auto", "rounded-lg", "mb-4");
-                    imageGallery.appendChild(imgElement);
-                }
-            });
+            // Media Preview
+            if (data.data.media && data.data.media.length > 0) {
+                data.data.media.forEach((media) => {
+                    if (media.type === "image") {
+                        // Preview for image
+                        const imgElement = document.createElement("img");
+                        imgElement.src = media.url;
+                        imgElement.alt = "Instagram Image";
+                        imgElement.classList.add("w-full", "h-auto", "rounded-lg");
+                        mediaPreview.appendChild(imgElement);
+
+                        // Set download link for image
+                        downloadMedia.href = media.url;
+                        downloadMedia.download = "instagram-image.jpg"; // Default name for the download
+                        downloadMedia.textContent = "Download Image";
+                    } else if (media.type === "video") {
+                        // Preview for video
+                        const videoElement = document.createElement("video");
+                        videoElement.src = media.url;
+                        videoElement.classList.add("w-full", "rounded-lg");
+                        videoElement.controls = true;
+                        mediaPreview.appendChild(videoElement);
+
+                        // Set download link for video
+                        downloadMedia.href = media.url;
+                        downloadMedia.download = "instagram-video.mp4"; // Default name for the download
+                        downloadMedia.textContent = "Download Video";
+                    }
+                });
+            }
 
             // Display result section
             resultSection.style.display = 'block';

@@ -107,9 +107,8 @@
     <!-- Result Section -->
     <section id="result" class="py-12 hidden">
         <div class="container mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Video Details (Video not available in current API response, so this section is not used) -->
+            <!-- Author Info -->
             <div class="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
-                <!-- Author Info -->
                 <div class="flex items-center space-x-4">
                     <img id="authorAvatar" src="https://via.placeholder.com/50" alt="Avatar" class="w-16 h-16 rounded-full border border-gray-600">
                     <div>
@@ -117,10 +116,8 @@
                         <p id="authorUsername" class="text-sm text-gray-400">@username</p>
                     </div>
                 </div>
-                <!-- Caption -->
                 <p id="videoCaption" class="mt-4 text-base text-gray-300">Caption of the video...</p>
 
-                <!-- Engagement Info (Likes, Comments, Shares) -->
                 <div class="flex items-center space-x-6 mt-2">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-heart text-red-500"></i>
@@ -135,26 +132,25 @@
                         <span id="shares" class="text-gray-300">2113</span>
                     </div>
                 </div>
-
-                <!-- Image Gallery (since we are dealing with images, not video) -->
-                <div id="imageGallery" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Images will be appended dynamically -->
-                </div>
             </div>
 
-            <!-- Music Information (Not available in current response, so omitted) -->
+            <!-- Media Preview and Download -->
             <div class="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
-                <h4 class="text-lg font-bold text-gray-100">🎵 Music Information</h4>
-                <p id="musicTitle" class="text-base mt-4 text-gray-300"><strong>Title:</strong> <span>Music Title</span></p>
-                <p id="musicAuthor" class="text-base text-gray-300"><strong>Author:</strong> <span>Music Author</span></p>
-                <p id="musicDuration" class="text-base text-gray-300"><strong>Duration:</strong> <span>00:00</span></p>
-                <a id="downloadMusic" class="mt-4 w-full px-4 py-2 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 text-white rounded-lg hover:bg-gray-500 transition-all block text-center" download>
-                    Download Music
+                <h4 class="text-xl font-bold text-gray-100">📸 Media Preview</h4>
+
+                <!-- Media Preview will be added dynamically -->
+                <div id="mediaPreview" class="mt-4">
+                    <!-- Image or Video will be inserted here -->
+                </div>
+
+                <!-- Download Button -->
+                <a id="downloadMedia" href="#" class="mt-4 w-full px-4 py-2 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 text-white rounded-lg hover:bg-gray-500 transition-all block text-center">
+                    Download Media
                 </a>
             </div>
         </div>
     </section>
-
+    
     <!-- Features Section -->
     <section id="features" class="py-12 bg-gray-900 fade-in">
         <div class="container mx-auto px-6 lg:px-20">
