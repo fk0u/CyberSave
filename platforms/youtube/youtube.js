@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const videoViews = document.getElementById("videoViews");
         const videoLikes = document.getElementById("videoLikes");
         const videoDislikes = document.getElementById("videoDislikes");
-        const downloadLinkContainer = document.getElementById("downloadLinkContainer");
+        const downloadLinkContainer = document.getElementById("downloadLinks");  // Changed ID here
 
         // Show loading status
         loadingStatus.classList.remove("hidden");
