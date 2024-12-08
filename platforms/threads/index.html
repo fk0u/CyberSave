@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberThreads - Threads Downloader</title>
+    <title>CyberThreads - Download Threads Content</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -30,36 +30,19 @@
             transition: opacity 0.4s ease-in, transform 0.4s ease-in;
         }
 
-        /* Acrylic Container Effect */
-        .acrylic {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px;
-        }
-
-        /* Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeIn 0.8s forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Custom styles for Threads theme */
+        .bg-threads {
+            background: linear-gradient(to bottom, #00a8ff, #0191c8);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-gray-300 font-sans">
+<body class="font-sans bg-threads text-gray-100">
+
     <!-- Header -->
-    <header class="bg-purple-900 shadow-md sticky top-0 z-10">
+    <header class="bg-[#1C1C1E] shadow-md sticky top-0 z-10">
         <div class="container mx-auto px-6 lg:px-20 py-4 flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold text-white">
-                <i class="fab fa-instagram"></i> CyberThreads
+            <a href="/" class="text-2xl font-bold text-white flex items-center">
+                <i class="fab fa-facebook"></i> CyberThreads
             </a>
             <nav class="hidden lg:flex space-x-6">
                 <a href="#hero" class="hover:text-gray-400">Home</a>
@@ -70,31 +53,24 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="mobileMenu" class="hidden bg-gray-800">
-            <nav class="flex flex-col space-y-4 p-4">
-                <a href="#hero" class="hover:text-gray-400">Home</a>
-                <a href="#features" class="hover:text-gray-400">Features</a>
-                <a href="#about" class="hover:text-gray-400">About</a>
-            </nav>
-        </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="text-center py-12 bg-gradient-to-br from-purple-900 to-purple-800 shadow-md">
+    <section id="hero" class="text-center py-12 bg-gradient-to-br from-[#00a8ff] to-[#0191c8] shadow-md">
         <div class="container mx-auto px-6 lg:px-20">
-            <h1 class="text-4xl lg:text-6xl font-extrabold text-white fade-in">Download Threads Content Effortlessly</h1>
-            <p class="mt-4 text-lg lg:text-2xl text-gray-400 fade-in">
-                High-quality downloads of Threads photos and videos, all in one place.
+            <h1 class="text-4xl lg:text-6xl font-extrabold text-white fade-in">Download Threads Content with Ease</h1>
+            <p class="mt-4 text-lg lg:text-2xl text-gray-100 fade-in">
+                Download photos and videos from Threads instantly and in high-quality.
             </p>
-            <form id="downloadForm" class="mt-6 flex flex-col lg:flex-row items-center justify-center gap-4 relative acrylic fade-in">
+            <form id="downloadForm" class="mt-6 flex flex-col lg:flex-row items-center justify-center gap-4 relative bg-opacity-50 p-6 rounded-lg">
                 <div class="relative flex items-center w-full lg:w-3/5">
-                    <input type="url" id="threadsUrl" placeholder="https://www.threads.com/example"
-                           class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                    <input type="url" id="threadUrl" placeholder="https://www.threads.com/example"
+                           class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <button id="pasteButton" type="button" class="px-4 py-2 bg-gray-700 text-white rounded-r-lg hover:bg-gray-500 transition-all">
                         <i class="fas fa-clipboard"></i>
                     </button>
                 </div>
-                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-lg hover:bg-purple-600 transition-all">
+                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-[#00a8ff] to-[#0191c8] text-white rounded-lg hover:bg-[#018bb5] transition-all">
                     Download
                 </button>
             </form>
@@ -107,7 +83,7 @@
     <!-- Result Section -->
     <section id="result" class="py-12 hidden">
         <div class="container mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
+            <div class="bg-[#2e2e2e] border border-gray-700 rounded-lg p-6 shadow-lg">
                 <div class="flex items-center space-x-4">
                     <img id="authorAvatar" src="https://via.placeholder.com/50" alt="Avatar" class="w-16 h-16 rounded-full border border-gray-600">
                     <div>
@@ -115,32 +91,65 @@
                         <p id="authorUsername" class="text-sm text-gray-400">@username</p>
                     </div>
                 </div>
-                <p id="postCaption" class="mt-4 text-base text-gray-300">Caption of the post...</p>
-                <div class="flex items-center space-x-6 mt-2">
-                    <div class="flex items-center space-x-2">
+                <p id="threadDescription" class="mt-4 text-base text-gray-300">Thread description...</p>
+                <div class="flex items-center space-x-6 mt-4">
+                    <div class="flex items-center space-x-2 text-gray-500">
                         <i class="fas fa-heart text-red-500"></i>
-                        <span id="likes" class="text-gray-300">151.5K</span>
+                        <span id="likes">1,163</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 text-gray-500">
                         <i class="fas fa-comment text-blue-400"></i>
-                        <span id="comments" class="text-gray-300">1910</span>
+                        <span id="replies">280</span>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-share text-green-400"></i>
-                        <span id="shares" class="text-gray-300">2113</span>
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-retweet text-green-400"></i>
+                        <span id="retweets">2,506</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
-                <h4 class="text-xl font-bold text-white">📸 Media Preview</h4>
-                <div id="mediaPreview" class="mt-4">
-                    <!-- Image or Video will be inserted here -->
                 </div>
                 <a id="downloadMedia" href="#" class="mt-4 w-full px-4 py-2 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 text-white rounded-lg hover:bg-gray-500 transition-all block text-center">
                     Download Media
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-12 bg-[#0191c8]">
+        <div class="container mx-auto px-6 lg:px-20 text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-white">Why Choose CyberThreads?</h2>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#2c2c2e] border border-gray-700 rounded-lg p-6 shadow-lg text-center hover:scale-105 transition-transform">
+                    <i class="fas fa-bolt text-3xl text-[#00a8ff]"></i>
+                    <h3 class="text-xl lg:text-2xl font-bold text-white mt-4">Fast Downloads</h3>
+                    <p class="mt-4 text-gray-300">
+                        Get your favorite content in seconds without any hassle.
+                    </p>
+                </div>
+                <div class="bg-[#2c2c2e] border border-gray-700 rounded-lg p-6 shadow-lg text-center hover:scale-105 transition-transform">
+                    <i class="fas fa-ban text-3xl text-[#00a8ff]"></i>
+                    <h3 class="text-xl lg:text-2xl font-bold text-white mt-4">No Ads</h3>
+                    <p class="mt-4 text-gray-300">
+                        Enjoy ad-free experience and smooth downloads.
+                    </p>
+                </div>
+                <div class="bg-[#2c2c2e] border border-gray-700 rounded-lg p-6 shadow-lg text-center hover:scale-105 transition-transform">
+                    <i class="fas fa-shield-alt text-3xl text-[#00a8ff]"></i>
+                    <h3 class="text-xl lg:text-2xl font-bold text-white mt-4">Secure & Private</h3>
+                    <p class="mt-4 text-gray-300">
+                        Your data and downloads are secure and kept private.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 bg-[#1c1c1e] text-gray-100">
+        <div class="container mx-auto px-6 lg:px-20 text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-white">About CyberThreads</h2>
+            <p class="mt-4 text-lg text-center text-gray-400">
+                CyberThreads is a modern tool to download high-quality content from Threads, enabling users to save photos, videos, and posts without any limits. Our mission is to make downloading and sharing content easier for everyone.
+            </p>
         </div>
     </section>
     
