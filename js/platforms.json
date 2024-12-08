@@ -40,6 +40,20 @@
       "icon": "fab fa-youtube",
       "link": "/platforms/youtube",
       "color": "text-red-500"
+    },
+    {
+      "name": "Facebook",
+      "description": "Download Facebook post and reels easily.",
+      "icon": "fab fa-facebook",
+      "link": "/platforms/facebook",
+      "color": "text-blue-500"
+    },
+    {
+      "name": "Threads",
+      "description": "Download Threads post and videos easily.",
+      "icon": "fab fa-threads",
+      "link": "/platforms/threads",
+      "color": "text-grey-400"
     }
     
   ]
