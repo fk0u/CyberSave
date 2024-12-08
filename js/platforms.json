@@ -51,9 +51,9 @@
     {
       "name": "Threads",
       "description": "Download Threads post and videos easily.",
-      "icon": "fab fa-threads",
+      "icon": "fa-brands fa-threads",
       "link": "/platforms/threads",
-      "color": "text-gray-400"
+      "color": "text-gray-500"
     }
     
   ]
