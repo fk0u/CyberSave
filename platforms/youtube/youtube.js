@@ -24,9 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const encodedUrl = encodeURIComponent(url);
 
         try {
-            // Send request to the Caliph API with the properly encoded URL
-            const apiUrl = `https://api.caliph.biz.id/api/ytv?url=${encodedUrl}&apikey=7626a536ef7c434c`;
-            const response = await fetch(apiUrl);
+            // Send request to CORS proxy server to bypass CORS restrictions
+            const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.caliph.biz.id/api/ytv?url=${encodedUrl}&apikey=7626a536ef7c434c`;
+            const response = await fetch(apiUrl, {
+                headers: {
+                    // Add any additional headers if required, such as an API key or authentication token.
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
 
             // Check if the response is ok (status 200)
             if (!response.ok) {
