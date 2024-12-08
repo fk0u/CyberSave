@@ -20,54 +20,36 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show loading status
         loadingStatus.classList.remove("hidden");
 
-        // Encode the URL to make sure it's properly formatted
-        const encodedUrl = encodeURIComponent(url);
-
         try {
-            // Send request to CORS proxy server to bypass CORS restrictions
-            const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.caliph.biz.id/api/ytv?url=${encodedUrl}&apikey=7626a536ef7c434c`;
-            const response = await fetch(apiUrl, {
-                headers: {
-                    // Add any additional headers if required, such as an API key or authentication token.
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-
-            // Check if the response is ok (status 200)
-            if (!response.ok) {
-                throw new Error('Failed to fetch data from the API');
-            }
-
-            // Parse the response data
+            // Send request to YouTube downloader API
+            const response = await fetch(`https://api.zpi.my.id/v1/download/youtube?url=${url}`);
             const data = await response.json();
 
             if (data.status === 200) {
-                const videoData = data.result;
+                const videoData = data.data;
 
                 // Hide loading status and show results section
                 loadingStatus.classList.add("hidden");
                 resultsSection.classList.remove("hidden");
 
-                // Populate the results section dynamically with data from the Caliph API
+                // Populate the results section dynamically
                 videoPreview.innerHTML = `
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoData.result.split('/').pop()}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoData.id}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 `;
                 videoTitle.textContent = videoData.title;
-                videoDescription.textContent = videoData.desc.slice(0, 150) + '...';  // Limit to 150 chars
-                videoDuration.querySelector('span').textContent = videoData.duration;
+                videoDescription.textContent = videoData.description.slice(0, 150) + '...';  // Limit to 150 chars
+                videoDuration.querySelector('span').textContent = videoData.duration_formatted;
                 videoViews.querySelector('span').textContent = videoData.views;
-                videoLikes.querySelector('span').textContent = videoData.likes ? videoData.likes : 'N/A';
-                videoDislikes.querySelector('span').textContent = videoData.dislike ? videoData.dislike : 'N/A';
+                videoLikes.querySelector('span').textContent = videoData.ratings.likes;
+                videoDislikes.querySelector('span').textContent = videoData.ratings.dislikes;
 
-                // Set download link from Caliph API
-                downloadLink.href = videoData.result;
+                // Set download link
+                downloadLink.href = videoData.url;
 
             } else {
-                // Handle if the status is not 200
-                throw new Error('Error fetching video data. Please try again.');
+                alert('Error fetching video data. Please try again.');
             }
         } catch (error) {
-            // Handle errors from fetch or API response
             console.error('Error:', error);
             alert('Failed to fetch video data. Please check the URL or try again later.');
             loadingStatus.classList.add("hidden");
