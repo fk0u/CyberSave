@@ -43,7 +43,7 @@ document.getElementById("downloadForm").addEventListener("submit", async (e) => 
             comments.textContent = "0"; // Default to 0 if comments data is missing
             shares.textContent = "0"; // Default to 0 if shares data is missing
 
-            // Media Preview
+            // Media Preview (Image or Video)
             if (data.data.media && data.data.media.length > 0) {
                 data.data.media.forEach((media) => {
                     if (media.type === "image") {
