@@ -55,29 +55,37 @@
     <!-- Hero Section -->
     <section id="hero" class="text-center py-12 bg-gradient-to-br from-gray-900 to-gray-800 shadow-md">
         <div class="container mx-auto px-6 lg:px-20">
-            <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-100">YouTube Video & Music Downloader</h1>
+            <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-100">YouTube Video Downloader</h1>
             <p class="mt-4 text-lg lg:text-2xl text-gray-400">
-                Download your favorite YouTube videos and music with ease!
+                Download your favorite YouTube videos easily!
             </p>
             <form id="actionForm" class="mt-6 flex flex-col lg:flex-row items-center justify-center gap-4 relative acrylic-container">
                 <input type="text" id="userQuery" placeholder="Enter YouTube URL"
                        class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                <select id="contentType" class="px-2 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg">
-                    <option value="video">Video</option>
-                    <option value="music">Music</option>
-                </select>
                 <button type="submit" class="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:bg-red-500 transition-all">
                     Download
                 </button>
             </form>
+
+            <!-- Loading Status -->
+            <div id="loadingStatus" class="mt-4 hidden text-white bg-yellow-600 py-2 px-4 rounded-md">
+                Fetching video data, please wait...
+            </div>
         </div>
     </section>
 
     <!-- Results Section -->
     <section id="results" class="py-12 hidden">
         <div class="container mx-auto px-6 lg:px-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Dynamic content will be loaded here -->
+            <div class="bg-gray-800 p-4 rounded-lg shadow-lg hover:scale-105 transition-transform">
+                <img id="thumbnail" class="w-full h-48 object-cover rounded-lg mb-4" alt="Video Thumbnail">
+                <h2 id="videoTitle" class="text-xl font-semibold text-gray-100"></h2>
+                <p id="videoDescription" class="mt-2 text-gray-300"></p>
+                <div class="mt-4">
+                    <a id="downloadLink" href="#" download class="inline-block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Download Video
+                    </a>
+                </div>
             </div>
         </div>
     </section>
