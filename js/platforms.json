@@ -53,7 +53,7 @@
       "description": "Download Threads post and videos easily.",
       "icon": "fab fa-threads",
       "link": "/platforms/threads",
-      "color": "text-grey-400"
+      "color": "text-gray-400"
     }
     
   ]
