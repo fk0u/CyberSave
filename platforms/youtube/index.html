@@ -62,43 +62,14 @@
             <form id="actionForm" class="mt-6 flex flex-col lg:flex-row items-center justify-center gap-4 relative acrylic-container">
                 <input type="text" id="userQuery" placeholder="Enter YouTube URL"
                        class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                <select id="contentType" class="px-2 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg" onchange="toggleOptions()">
+                <select id="contentType" class="px-2 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg">
                     <option value="video">Video</option>
                     <option value="music">Music</option>
                 </select>
-
-                <div id="qualityOptions" class="flex flex-col space-y-4 mt-4 w-full hidden">
-                    <!-- Video Quality Options -->
-                    <div id="videoQualityOptions" class="hidden">
-                        <select id="videoQuality" class="px-2 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg">
-                            <option value="1080p">1080p</option>
-                            <option value="720p">720p</option>
-                            <option value="480p">480p</option>
-                            <option value="360p">360p</option>
-                        </select>
-                    </div>
-
-                    <!-- Audio Quality Options -->
-                    <div id="audioQualityOptions" class="hidden">
-                        <select id="audioQuality" class="px-2 py-2 border border-gray-600 bg-gray-800 text-white rounded-lg">
-                            <option value="128kbps">128 kbps</option>
-                            <option value="192kbps">192 kbps</option>
-                            <option value="256kbps">256 kbps</option>
-                            <option value="320kbps">320 kbps</option>
-                            <option value="16bit">16-bit</option>
-                        </select>
-                    </div>
-                </div>
-
                 <button type="submit" class="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:bg-red-500 transition-all">
                     Download
                 </button>
             </form>
-
-            <!-- Loading Bar -->
-            <div id="loadingBar" class="hidden mt-4 w-full bg-gray-700 text-white rounded-lg p-2 text-center">
-                <span id="loadingMessage">Loading...</span>
-            </div>
         </div>
     </section>
 
