@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberThreads - Threads Downloader</title>
+    <title>CyberX - Twitter Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -54,12 +54,12 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-gray-300 font-sans">
+<body class="bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 text-gray-300 font-sans">
     <!-- Header -->
-    <header class="bg-purple-900 shadow-md sticky top-0 z-10">
+    <header class="bg-blue-900 shadow-md sticky top-0 z-10">
         <div class="container mx-auto px-6 lg:px-20 py-4 flex items-center justify-between">
             <a href="/" class="text-2xl font-bold text-white">
-                <i class="fab fa-instagram"></i> CyberThreads
+                <i class="fab fa-twitter"></i> CyberX
             </a>
             <nav class="hidden lg:flex space-x-6">
                 <a href="#hero" class="hover:text-gray-400">Home</a>
@@ -80,21 +80,21 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="text-center py-12 bg-gradient-to-br from-purple-900 to-purple-800 shadow-md">
+    <section id="hero" class="text-center py-12 bg-gradient-to-br from-blue-900 to-blue-800 shadow-md">
         <div class="container mx-auto px-6 lg:px-20">
-            <h1 class="text-4xl lg:text-6xl font-extrabold text-white fade-in">Download Threads Content Effortlessly</h1>
+            <h1 class="text-4xl lg:text-6xl font-extrabold text-white fade-in">Download Twitter (X) Content Effortlessly</h1>
             <p class="mt-4 text-lg lg:text-2xl text-gray-400 fade-in">
-                High-quality downloads of Threads photos and videos, all in one place.
+                High-quality downloads of Twitter photos and videos, all in one place.
             </p>
             <form id="downloadForm" class="mt-6 flex flex-col lg:flex-row items-center justify-center gap-4 relative acrylic fade-in">
                 <div class="relative flex items-center w-full lg:w-3/5">
-                    <input type="url" id="threadsUrl" placeholder="https://www.threads.com/example"
-                           class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                    <input type="url" id="twitterUrl" placeholder="https://twitter.com/example/status/1864251842684965220"
+                           class="w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <button id="pasteButton" type="button" class="px-4 py-2 bg-gray-700 text-white rounded-r-lg hover:bg-gray-500 transition-all">
                         <i class="fas fa-clipboard"></i>
                     </button>
                 </div>
-                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-lg hover:bg-purple-600 transition-all">
+                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all">
                     Download
                 </button>
             </form>
@@ -115,19 +115,19 @@
                         <p id="authorUsername" class="text-sm text-gray-400">@username</p>
                     </div>
                 </div>
-                <p id="postCaption" class="mt-4 text-base text-gray-300">Caption of the post...</p>
+                <p id="tweetDescription" class="mt-4 text-base text-gray-300">Tweet description...</p>
                 <div class="flex items-center space-x-6 mt-2">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-heart text-red-500"></i>
-                        <span id="likes" class="text-gray-300">151.5K</span>
+                        <span id="likes" class="text-gray-300">11,163</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-comment text-blue-400"></i>
-                        <span id="comments" class="text-gray-300">1910</span>
+                        <span id="replies" class="text-gray-300">280</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <i class="fas fa-share text-green-400"></i>
-                        <span id="shares" class="text-gray-300">2113</span>
+                        <i class="fas fa-retweet text-green-400"></i>
+                        <span id="retweets" class="text-gray-300">2,506</span>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
         // Handle form submission
         document.getElementById('downloadForm').addEventListener('submit', async (event) => {
             event.preventDefault();
-            const url = document.getElementById('threadsUrl').value;
+            const url = document.getElementById('twitterUrl').value;
 
             console.log('Form submitted with URL:', url);  // Debugging log
 
@@ -157,7 +157,7 @@
             document.getElementById('loadingMessage').innerText = 'Fetching data...';
 
             try {
-                const response = await fetch(`https://api.zpi.my.id/v1/download/threads?url=${encodeURIComponent(url)}`);
+                const response = await fetch(`https://api.zpi.my.id/v1/download/twitter?url=${encodeURIComponent(url)}`);
                 
                 // Log response for debugging
                 console.log('API Response:', response);
@@ -169,37 +169,35 @@
                     document.getElementById('loadingBar').classList.add('hidden');
                     document.getElementById('result').classList.remove('hidden');
 
-                    const { title, media, thumbnail } = data.data;
-                    document.getElementById('postCaption').innerText = title;
+                    const { description, likes, replies, retweets, author, media } = data.data;
+                    document.getElementById('tweetDescription').innerText = description;
 
-                    // Set thumbnail and author data
-                    document.getElementById('authorAvatar').src = thumbnail;
-                    document.getElementById('authorName').innerText = title;
-                    document.getElementById('authorUsername').innerText = `@${data.data.url.split('/')[3]}`;
+                    // Set author data
+                    document.getElementById('authorAvatar').src = author.avatar;
+                    document.getElementById('authorName').innerText = author.display_name;
+                    document.getElementById('authorUsername').innerText = `@${author.username}`;
 
-                    // Handle media preview (video or image)
+                    // Handle media preview (image)
                     const previewElement = document.getElementById('mediaPreview');
                     const downloadLink = document.getElementById('downloadMedia');
                     
-                    previewElement.innerHTML = ''; // Clear previous content
+                    previewElement.innerHTML = '';  // Clear previous content
 
-                    if (media) {
-                        if (media.quality_hd) {
-                            const videoElement = document.createElement('video');
-                            videoElement.src = media.quality_hd;
-                            videoElement.controls = true;
-                            videoElement.classList.add('w-full', 'rounded-lg');
-                            previewElement.appendChild(videoElement);
-                            downloadLink.href = media.quality_hd;
-                        } else {
-                            const imgElement = document.createElement('img');
-                            imgElement.src = thumbnail;
-                            imgElement.alt = "Thumbnail Image";
-                            imgElement.classList.add('w-full', 'rounded-lg');
-                            previewElement.appendChild(imgElement);
-                            downloadLink.href = thumbnail;
-                        }
+                    if (media && media.length > 0) {
+                        const mediaUrl = media[0].url;
+                        const imgElement = document.createElement('img');
+                        imgElement.src = mediaUrl;
+                        imgElement.alt = "Media Image";
+                        imgElement.classList.add('w-full', 'rounded-lg');
+                        previewElement.appendChild(imgElement);
+                        downloadLink.href = mediaUrl;
                     }
+
+                    // Update tweet statistics
+                    document.getElementById('likes').innerText = likes;
+                    document.getElementById('replies').innerText = replies;
+                    document.getElementById('retweets').innerText = retweets;
+
                 } else {
                     document.getElementById('loadingMessage').innerText = "Failed to fetch data!";
                     console.error('API Error:', data.message);
