@@ -50,9 +50,12 @@
 - ✅ TikTok Downloader
 - ✅ Spotify Downloader
 - ✅ Instagram Downloader
-- 🚧 YouTube Downloader
-- 🚧 Facebook Downloader
-- 🚧 Pinterest Downloader
+- ✅ YouTube Downloader
+- ✅ Facebook Downloader
+- ✅ Pinterest Downloader
+- ✅ Threads Downloader
+- ✅ SoundCloud Downloader
+- ✅ X/Twitter Downloader
 
 
 ## **Kontribusi**
