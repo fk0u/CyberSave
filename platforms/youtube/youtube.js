@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const resultsSection = document.getElementById("results");
 
         // Get elements for video data
-        const thumbnail = document.getElementById("thumbnail");
+        const videoPreview = document.getElementById("videoPreview");
         const videoTitle = document.getElementById("videoTitle");
         const videoDescription = document.getElementById("videoDescription");
         const videoDuration = document.getElementById("videoDuration");
@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 resultsSection.classList.remove("hidden");
 
                 // Populate the results section dynamically
-                thumbnail.src = videoData.thumbnail.url;
+                videoPreview.innerHTML = `
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoData.id}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
                 videoTitle.textContent = videoData.title;
                 videoDescription.textContent = videoData.description.slice(0, 150) + '...';  // Limit to 150 chars
                 videoDuration.querySelector('span').textContent = videoData.duration_formatted;
