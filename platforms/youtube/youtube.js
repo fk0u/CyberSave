@@ -21,35 +21,31 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingStatus.classList.remove("hidden");
 
         try {
-            // First API call: Send request to YouTube downloader API (ZPI API)
-            const zpiResponse = await fetch(`https://api.zpi.my.id/v1/download/youtube?url=${url}`);
-            const zpiData = await zpiResponse.json();
+            // Send request to the Caliph API
+            const apiUrl = `https://api.caliph.biz.id/api/ytv?url=${url}&apikey=7626a536ef7c434c`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-            // Second API call: Send request to the Caliph API
-            const caliphResponse = await fetch(`https://api.caliph.biz.id/api/ytv?url=${url}&apikey=7626a536ef7c434c`);
-            const caliphData = await caliphResponse.json();
-
-            if (zpiData.status === 200 && caliphData.status === 200) {
-                const zpiVideoData = zpiData.data;
-                const caliphVideoData = caliphData.result;
+            if (data.status === 200) {
+                const videoData = data.result;
 
                 // Hide loading status and show results section
                 loadingStatus.classList.add("hidden");
                 resultsSection.classList.remove("hidden");
 
-                // Populate the results section dynamically with data from both APIs
+                // Populate the results section dynamically with data from Caliph API
                 videoPreview.innerHTML = `
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${zpiVideoData.id}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoData.result.split('/').pop()}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 `;
-                videoTitle.textContent = zpiVideoData.title || caliphVideoData.title;
-                videoDescription.textContent = caliphVideoData.desc.slice(0, 150) + '...';  // Limit to 150 chars
-                videoDuration.querySelector('span').textContent = caliphVideoData.duration;
-                videoViews.querySelector('span').textContent = caliphVideoData.views;
-                videoLikes.querySelector('span').textContent = caliphVideoData.likes ? caliphVideoData.likes : 'N/A';
-                videoDislikes.querySelector('span').textContent = caliphVideoData.dislike ? caliphVideoData.dislike : 'N/A';
+                videoTitle.textContent = videoData.title;
+                videoDescription.textContent = videoData.desc.slice(0, 150) + '...';  // Limit to 150 chars
+                videoDuration.querySelector('span').textContent = videoData.duration;
+                videoViews.querySelector('span').textContent = videoData.views;
+                videoLikes.querySelector('span').textContent = videoData.likes ? videoData.likes : 'N/A';
+                videoDislikes.querySelector('span').textContent = videoData.dislike ? videoData.dislike : 'N/A';
 
                 // Set download link from Caliph API
-                downloadLink.href = caliphVideoData.result;
+                downloadLink.href = videoData.result;
 
             } else {
                 alert('Error fetching video data. Please try again.');
