@@ -61,6 +61,13 @@
       "icon": "fab fa-twitter",
       "link": "/platforms/X",
       "color": "text-blue-500"
+    },
+    {
+      "name": "Capcut Downloader",
+      "description": "Download Capcut Template Video easily.",
+      "icon": "fab fa-capcut",
+      "link": "/platforms/capcut",
+      "color": "text-white-500"
     }
     
   ]
