@@ -223,55 +223,51 @@
 
             // Render content into the results section
             document.getElementById('results').innerHTML = `
-                <div class="acrylic-container p-6 bg-white bg-opacity-90 rounded-lg shadow-lg">
-                    <div class="flex flex-col lg:flex-row items-start gap-8 result-container">
-                        
-                        <!-- Author Section -->
-                        <div class="flex-shrink-0 w-full lg:w-1/3 mb-6 lg:mb-0">
-                            <img src="${author.avatar.large}" alt="Author Avatar" class="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4">
-                            <a href="${author.profile_url}" target="_blank" class="text-pinterest-red font-semibold text-xl">${author.full_name}</a>
-                            <p class="text-gray-600 text-sm">Followers: ${author.follower_count}</p>
-                            <p class="text-gray-500 text-sm mt-2">Username: @${author.username}</p>
-                        </div>
-                        
-                        <!-- Pin Image and Details Section -->
-                        <div class="flex-1 w-full lg:w-2/3">
-                            <img src="${image}" alt="Pinterest Image" class="w-full rounded-lg shadow-lg mb-4">
-                            
-                            <!-- Pin Headline -->
-                            <h2 class="text-3xl font-bold text-gray-800 mb-2">${headline}</h2>
-                            
-                            <!-- Pin Article Body -->
-                            <p class="text-gray-700 text-lg mb-4">${articleBody}</p>
-                            
-                            <!-- Tags Section -->
-                            <div class="mb-4">
-                                <h4 class="font-semibold text-lg text-gray-800 mb-2">Tags</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    ${annotations.map(tag => `
-                                        <span class="bg-gray-200 text-gray-700 text-sm px-4 py-1 rounded-full shadow-sm hover:bg-gray-300 transition-all">
-                                            ${tag}
-                                        </span>
-                                    `).join('')}
-                                </div>
-                            </div>
+    <div class="acrylic-container p-6 bg-white bg-opacity-80 rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 result-container">
+            <!-- Author Section -->
+            <div class="flex flex-col items-center justify-center mb-8 lg:mb-0">
+                <img src="${author.avatar.large}" alt="Author Avatar" class="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4">
+                <a href="${author.profile_url}" target="_blank" class="text-pinterest-red font-semibold text-xl text-center">${author.full_name}</a>
+                <p class="text-gray-600 text-sm mt-2">Followers: ${author.follower_count}</p>
+                <p class="text-gray-500 text-sm mt-2">Username: @${author.username}</p>
+            </div>
 
-                            <!-- Date Published -->
-                            <p class="text-gray-500 text-sm mt-4">Published on: <span class="font-semibold text-gray-700">${datePublished}</span></p>
+            <!-- Pin Details Section -->
+            <div class="col-span-2">
+                <img src="${image}" alt="Pinterest Image" class="w-full rounded-lg shadow-lg mb-6">
+                <h2 class="text-3xl font-extrabold text-gray-800 mb-4">${headline}</h2>
+                <p class="text-lg text-gray-700 mb-4">${articleBody}</p>
 
-                            <!-- Download and Open Actions -->
-                            <div class="mt-6 space-x-4 flex flex-wrap gap-4">
-                                <a href="${pageUrl}" target="_blank" class="flex items-center bg-pinterest-red text-white font-semibold py-2 px-6 rounded-lg hover:bg-pinterest-red-dark transition-all">
-                                    <i class="fab fa-pinterest mr-2"></i> Open in Pinterest
-                                </a>
-                                <a href="${image}" download class="flex items-center bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-600 transition-all">
-                                    <i class="fas fa-download mr-2"></i> Download Image
-                                </a>
-                            </div>
-                        </div>
+                <!-- Tags Section -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-lg text-gray-800 mb-2">Tags</h4>
+                    <div class="flex flex-wrap gap-2">
+                        ${annotations.map(tag => `
+                            <span class="bg-gray-200 text-gray-700 text-sm px-4 py-1 rounded-full shadow-sm hover:bg-gray-300 transition-all">
+                                ${tag}
+                            </span>
+                        `).join('')}
                     </div>
                 </div>
-            `;
+
+                <!-- Date Published -->
+                <p class="text-gray-500 text-sm mt-4">Published on: <span class="font-semibold text-gray-700">${datePublished}</span></p>
+
+                <!-- Download and Open Actions -->
+                <div class="mt-6 space-x-4 flex justify-center lg:justify-start gap-4">
+                    <a href="${pageUrl}" target="_blank" class="flex items-center bg-pinterest-red text-white font-semibold py-2 px-6 rounded-lg hover:bg-pinterest-red-dark transition-all">
+                        <i class="fab fa-pinterest mr-2"></i> Open in Pinterest
+                    </a>
+                    <a href="${image}" download class="flex items-center bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-600 transition-all">
+                        <i class="fas fa-download mr-2"></i> Download Image
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+
 
         }
     </script>
