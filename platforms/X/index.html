@@ -184,51 +184,59 @@
     </section>
 
     <script>
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.classList.add("show");
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 3000);
-        }
-
         document.getElementById("downloadForm").addEventListener("submit", async function(event) {
             event.preventDefault();
-            const soundcloudUrl = document.getElementById('soundcloudUrl').value;
+            const twitterUrl = document.getElementById('twitterUrl').value;
             document.getElementById('loadingBar').classList.remove("hidden");
-            document.getElementById('results').classList.add("hidden");
+            document.getElementById('result').classList.add("hidden");
 
             try {
-                showToast("Fetching track details...");
-                const response = await fetch('https://api.zpi.my.id/v1/download/soundcloud?url=' + encodeURIComponent(soundcloudUrl));
-
+                const response = await fetch('https://api.zpi.my.id/v1/download/twitter?url=' + encodeURIComponent(twitterUrl));
                 const data = await response.json();
-
+                
                 if (data.status === 200) {
-                    showToast("Track details fetched successfully!");
+                    const author = data.data.author;
+                    const media = data.data.media;
+                    const tweetDescription = data.data.description;
+                    const likes = data.data.likes;
+                    const retweets = data.data.retweets;
+                    const replies = data.data.replies;
 
-                    const trackData = data.data;
-                    const resultsGrid = document.getElementById("resultsGrid");
-                    resultsGrid.innerHTML = `
-                        <div class="acrylic-container">
-                            <h3 class="text-xl text-white">${trackData.title}</h3>
-                            <img src="${trackData.thumbnail}" alt="Track Thumbnail" class="w-full rounded-lg mt-4">
-                            <p class="text-gray-300 mt-2">Author: <a href="${trackData.author.url}" class="text-soundcloud-orange" target="_blank">${trackData.author.name}</a></p>
-                            <p class="text-gray-300 mt-2">Duration: ${Math.floor(trackData.duration / 60000)}m ${Math.floor((trackData.duration % 60000) / 1000)}s</p>
-                            <p class="text-gray-300 mt-2">Likes: ${trackData.likes}</p>
-                            <p class="text-gray-300 mt-2">Play Count: ${trackData.play_count}</p>
-                            <a href="${trackData.track_url}" target="_blank" class="mt-4 inline-block px-6 py-2 bg-orange-600 text-white rounded-lg">Download</a>
-                        </div>
-                    `;
+                    // Update the result section
+                    document.getElementById('authorAvatar').src = author.avatar;
+                    document.getElementById('authorName').innerText = author.display_name;
+                    document.getElementById('authorUsername').innerText = '@' + author.username;
+                    document.getElementById('tweetDescription').innerText = tweetDescription;
+                    
+                    document.getElementById('likes').innerText = likes;
+                    document.getElementById('replies').innerText = replies;
+                    document.getElementById('retweets').innerText = retweets;
 
-                    document.getElementById('results').classList.remove("hidden");
+                    // Media preview
+                    const previewElement = document.getElementById('mediaPreview');
+                    const downloadLink = document.getElementById('downloadMedia');
+                    
+                    previewElement.innerHTML = '';  // Clear previous content
+
+                    if (media && media.length > 0) {
+                        const mediaUrl = media[0].url;
+                        const imgElement = document.createElement('img');
+                        imgElement.src = mediaUrl;
+                        imgElement.alt = "Tweet Media";
+                        imgElement.classList.add('w-full', 'rounded-lg', 'zoom');
+                        previewElement.appendChild(imgElement);
+                        downloadLink.href = mediaUrl;
+                    }
+
+                    document.getElementById('loadingBar').classList.add("hidden");
+                    document.getElementById('result').classList.remove("hidden");
                 } else {
-                    showToast(`Error: ${data.message}`);
+                    document.getElementById('loadingMessage').innerText = "Failed to fetch data!";
+                    console.error('API Error:', data.message);
                 }
             } catch (error) {
-                showToast("Failed to fetch track details.");
-                console.error('Error:', error);
+                document.getElementById('loadingMessage').innerText = "An error occurred!";
+                console.error('Fetch Error:', error);
             }
         });
     </script>
