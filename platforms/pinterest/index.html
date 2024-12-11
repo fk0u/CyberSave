@@ -110,10 +110,45 @@
         </div>
     </section>
 
-    <!-- Results Section -->
-    <section id="results" class="py-12 hidden">
-        <div class="container mx-auto px-6 lg:px-20">
-            <!-- Dynamic content will be loaded here -->
+    <!-- Result Section -->
+    <section id="result" class="py-12 hidden">
+        <div class="container mx-auto px-6 lg:px-20 flex justify-center items-center">
+            <div class="bg-[#1e1e1e] border border-gray-700 rounded-lg p-6 shadow-lg w-full max-w-3xl">
+                <!-- Author Section -->
+                <div class="flex items-center space-x-4">
+                    <img id="authorAvatar" src="https://via.placeholder.com/50" alt="Author Avatar" class="w-16 h-16 rounded-full border border-gray-600">
+                    <div>
+                        <h3 id="authorName" class="text-2xl font-bold text-white">Author Name</h3>
+                        <p id="authorUsername" class="text-sm text-gray-400">@username</p>
+                    </div>
+                </div>
+
+                <!-- Media Preview -->
+                <div id="mediaPreview" class="mt-6">
+                    <!-- Pin Image will be inserted here -->
+                </div>
+
+                <!-- Pin Description -->
+                <p id="pinDescription" class="mt-4 text-base text-gray-300">Description...</p>
+
+                <!-- Tags Section -->
+                <div class="mt-4" id="tags">
+                    <!-- Tags will be inserted here -->
+                </div>
+
+                <!-- Date Published -->
+                <p id="datePublished" class="text-gray-500 text-sm mt-4">Published on: <span class="font-semibold text-gray-300">MM/DD/YYYY</span></p>
+
+                <!-- Actions -->
+                <div class="mt-6 flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+                    <a id="openPinterest" href="#" target="_blank" class="flex-1 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:bg-red-500 transition-all text-center">
+                        <i class="fab fa-pinterest mr-2"></i> Open in Pinterest
+                    </a>
+                    <a id="downloadMedia" href="#" download class="flex-1 px-4 py-2 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 text-white rounded-lg hover:bg-gray-500 transition-all text-center">
+                        <i class="fas fa-download mr-2"></i> Download Image
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -170,106 +205,84 @@
 
     <script>
         // Handle form submit to fetch data from Pinterest API
-        document.getElementById('actionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+document.getElementById('actionForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            const userUrl = document.getElementById('userQuery').value.trim();
+    const userUrl = document.getElementById('userQuery').value.trim();
 
-            if (!userUrl) return;
+    if (!userUrl) return;
 
-            const cleanUrl = userUrl.split('?')[0]; // Remove URL parameters (if any)
+    const cleanUrl = userUrl.split('?')[0]; // Remove URL parameters (if any)
 
-            // Show loading bar
-            document.getElementById('loadingBar').classList.remove('hidden');
-            document.getElementById('results').classList.add('hidden');
+    // Show loading bar
+    document.getElementById('loadingBar').classList.remove('hidden');
+    document.getElementById('result').classList.add('hidden');
 
-            // Make API request to fetch Pinterest data
-            fetch(`https://api.zpi.my.id/v1/download/pinterest?url=${encodeURIComponent(cleanUrl)}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('loadingBar').classList.add('hidden');
-                    document.getElementById('results').classList.remove('hidden');
-
-                    // Check if the response is successful
-                    if (data.status === 200) {
-                        renderResult(data.data);
-                    } else {
-                        document.getElementById('results').innerHTML = `
-                            <div class="acrylic-container p-6 text-center text-gray-300">
-                                <p class="text-xl">No results found or invalid URL.</p>
-                            </div>
-                        `;
-                    }
-                })
-                .catch(err => {
-                    document.getElementById('loadingBar').classList.add('hidden');
-                    document.getElementById('results').innerHTML = `
-                        <div class="acrylic-container p-6 text-center text-gray-300">
-                            <p class="text-xl">An error occurred while fetching data.</p>
-                        </div>
-                    `;
-                });
+    // Make API request to fetch Pinterest data
+    fetch(`https://api.zpi.my.id/v1/download/pinterest?url=${encodeURIComponent(cleanUrl)}`)
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('loadingBar').classList.add('hidden');
+            if (data.status === 200) {
+                document.getElementById('result').classList.remove('hidden');
+                renderResult(data.data);
+            } else {
+                renderError('No results found or invalid URL.');
+            }
+        })
+        .catch((err) => {
+            document.getElementById('loadingBar').classList.add('hidden');
+            renderError('An error occurred while fetching data.');
         });
+});
 
-        // Function to render the result
-        function renderResult(data) {
-            const author = data.author;
-            const image = data.image;
-            const headline = data.headline;
-            const articleBody = data.article_body;
-            const datePublished = new Date(data.date_published).toLocaleDateString();
-            const annotations = data.visual_annotation;
-            const pageUrl = data.page_url;
+// Function to render the result
+function renderResult(data) {
+    const author = data.author;
+    const image = data.image;
+    const headline = data.headline || "No headline available";
+    const description = data.article_body || "No description available";
+    const datePublished = new Date(data.date_published).toLocaleDateString();
+    const annotations = data.visual_annotation || [];
+    const pageUrl = data.page_url;
 
-            // Render content into the results section
-            document.getElementById('results').innerHTML = `
-    <div class="acrylic-container p-6 bg-white bg-opacity-80 rounded-lg shadow-lg">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 result-container">
-            <!-- Author Section -->
-            <div class="flex flex-col items-center justify-center mb-8 lg:mb-0">
-                <img src="${author.avatar.large}" alt="Author Avatar" class="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4">
-                <a href="${author.profile_url}" target="_blank" class="text-pinterest-red font-semibold text-xl text-center">${author.full_name}</a>
-                <p class="text-gray-600 text-sm mt-2">Followers: ${author.follower_count}</p>
-                <p class="text-gray-500 text-sm mt-2">Username: @${author.username}</p>
-            </div>
+    // Update author section
+    document.getElementById('authorAvatar').src = author.avatar.large;
+    document.getElementById('authorName').textContent = author.full_name;
+    document.getElementById('authorUsername').textContent = `@${author.username}`;
 
-            <!-- Pin Details Section -->
-            <div class="col-span-2">
-                <img src="${image}" alt="Pinterest Image" class="w-full rounded-lg shadow-lg mb-6">
-                <h2 class="text-3xl font-extrabold text-gray-800 mb-4">${headline}</h2>
-                <p class="text-lg text-gray-700 mb-4">${articleBody}</p>
+    // Update media preview
+    const mediaPreview = document.getElementById('mediaPreview');
+    mediaPreview.innerHTML = `<img src="${image}" alt="Pin Image" class="w-full rounded-lg shadow-md">`;
 
-                <!-- Tags Section -->
-                <div class="mb-4">
-                    <h4 class="font-semibold text-lg text-gray-800 mb-2">Tags</h4>
-                    <div class="flex flex-wrap gap-2">
-                        ${annotations.map(tag => `
-                            <span class="bg-gray-200 text-gray-700 text-sm px-4 py-1 rounded-full shadow-sm hover:bg-gray-300 transition-all">
-                                ${tag}
-                            </span>
-                        `).join('')}
-                    </div>
-                </div>
+    // Update description
+    document.getElementById('pinDescription').textContent = description;
 
-                <!-- Date Published -->
-                <p class="text-gray-500 text-sm mt-4">Published on: <span class="font-semibold text-gray-700">${datePublished}</span></p>
+    // Update tags
+    const tagsSection = document.getElementById('tags');
+    tagsSection.innerHTML = annotations
+        .map(tag => `<span class="bg-gray-800 text-gray-300 text-sm px-4 py-1 rounded-full shadow-sm hover:bg-gray-700 transition-all">${tag}</span>`)
+        .join(' ');
 
-                <!-- Download and Open Actions -->
-                <div class="mt-6 space-x-4 flex justify-center lg:justify-start gap-4">
-                    <a href="${pageUrl}" target="_blank" class="flex items-center bg-pinterest-red text-white font-semibold py-2 px-6 rounded-lg hover:bg-pinterest-red-dark transition-all">
-                        <i class="fab fa-pinterest mr-2"></i> Open in Pinterest
-                    </a>
-                    <a href="${image}" download class="flex items-center bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-600 transition-all">
-                        <i class="fas fa-download mr-2"></i> Download Image
-                    </a>
-                </div>
-            </div>
+    // Update date published
+    document.getElementById('datePublished').textContent = datePublished;
+
+    // Update actions (Open Pinterest and Download Media)
+    document.getElementById('openPinterest').href = pageUrl;
+    document.getElementById('downloadMedia').href = image;
+    document.getElementById('downloadMedia').download = `pinterest_image_${author.username}`;
+}
+
+// Function to render error messages
+function renderError(message) {
+    document.getElementById('result').classList.remove('hidden');
+    document.getElementById('result').innerHTML = `
+        <div class="bg-[#1e1e1e] border border-gray-700 rounded-lg p-6 shadow-lg text-center text-white">
+            <p class="text-xl">${message}</p>
         </div>
-    </div>
-`;
+    `;
+}
 
-
-        }
     </script>
 </body>
 </html>
